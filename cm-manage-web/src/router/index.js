@@ -22,9 +22,10 @@ export default new Router({
       component: () => import('../pages/Layout'),
       redirect:"/index/dashboard",
       children:[ // 其它所有组件都是 Layout的子组件
+        //第一个参数：路径，第二个参数：对应的组件位置
         route("/index/dashboard","/Dashboard","Dashboard"),
         route("/item/category",'/item/Category',"Category"),
-        route("/item/brand",'/item/Brand',"Brand"),
+        route("/item/brand",'/item/MyBrand',"Brand"),
         route("/item/list",'/item/Goods',"Goods"),
         route("/item/specification",'/item/specification/Specification',"Specification"),
         route("/user/statistics",'/item/Statistics',"Statistics"),

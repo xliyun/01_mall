@@ -6,6 +6,18 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://127.0.0.1:10086/eureka
+      defaultZone: http://127.0.0.1:10086/eureka #eureka注册地址默认是http://localhost:8761/eureka/  多个地址以 ','隔开
+    #registry-fetch-interval-seconds: 30 #默认30拉取一次服务
+  instance: #实例
     register-with-eureka: false #不注册自己
-    fetch-registry: false #不拉取服务列表
+    fetch-registry: false #不拉取服务列表，默认30秒拉取一次列表 cm-item-service是服务提供方，所以不需要拉取服务
+    prefer-ip-address: true #把实例的ip配死，这样保证拿到的是ip而不是host
+    ip-address: 127.0.0.1 #把实例的ip配死，这样保证拿到的是ip而不是host
+    lease-renewal-interval-in-seconds: 30 #最小的续约时间(心跳时间)默认30s
+    lease-expiration-duration-in-seconds: 90 #最小的过期时长，隔了90s没有发送心跳，就认为服务挂了
+  server:
+    eviction-interval-timer-in-ms: 60000 #默认60s统一清除一次超过最小时长没有发送心跳的服务
+    enable-self-preservation: true #关闭自我保护模式(缺省为打开) Eureka会统计服务实例最近15分钟心跳续约的比例低于85%会认为是网络不好，就不会清除服务
+user-service: #要对哪个服务进行负载均衡算法
+  ribbon:
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule #负载均衡算法类名

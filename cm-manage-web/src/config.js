@@ -1,10 +1,11 @@
-const baseUrl = 'http://api.leyou.com'
+const baseUrl = 'http://127.0.0.1:10010'/*记得缓存域名 api.cm.com*/
 const config = {
   locale: 'zh-CN', // en-US, zh-CN
   url: baseUrl,
   debug: {
     http: false // http request log
   },
+  /*api是cm-gateway添加的zull前缀*/
   api: `${baseUrl}/api`,
   theme:{
     primary: "#2196F3",

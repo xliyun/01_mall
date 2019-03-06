@@ -14,8 +14,12 @@ eureka:
     instance-id: ${spring.application.name}:${server.port}
 zuul:
   prefix: /api # 添加路由前缀
-  routes:
-    item-service: /item/** #凡是以item开头的转发给item-service
+  routes:                  #api/item/category/list api是前缀，
+    item-service: /item/** #凡是以item开头的转发给item-service服务 真正到达的是catagory/list
+    upload-service:
+      path: /upload/** #这种写法是为了传递到controller的时候，带着/upload
+      serviceId: upload-service
+      strip-prefix: false
   #retryable: true
 hystrix:
   command:

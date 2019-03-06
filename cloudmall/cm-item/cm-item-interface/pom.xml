@@ -12,5 +12,13 @@
     <groupId>com.cloudmall.service</groupId>
     <artifactId>cm-item-interface</artifactId>
 
+    <dependencies>
+        <!--在右侧maven栏里面能查看通用mapper依赖了jpa javax.persistence-->
+        <dependency>
+            <groupId>tk.mybatis</groupId>
+            <artifactId>mapper-core</artifactId>
+            <version>1.0.4</version>
+        </dependency>
+    </dependencies>
 
 </project>

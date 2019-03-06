@@ -17,7 +17,7 @@
               <img src="../assets/2.jpeg">
             </v-list-tile-avatar>
             <v-list-tile-content>
-              <v-list-tile-title>虎哥</v-list-tile-title>
+              <v-list-tile-title>涛哥</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
         </v-list>
@@ -109,7 +109,7 @@
         dark: false,// 是否暗黑主题
         drawer: true,// 左侧导航是否隐藏
         miniVariant: false,// 左侧导航是否收起
-        title: '乐优商城后台管理',// 顶部导航条名称,
+        title: 'SpringCloud商城后台管理',// 顶部导航条名称,
         menuMap: {}
       }
     },

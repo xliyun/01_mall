@@ -2,9 +2,9 @@ server:
   port: 8081
 spring:
   application:
-    name: item-service
+    name: item-service #注册到eureka的名字
   datasource:
-    url: jdbc:mysql://localhost:3306/yun6 #springboot会根据你写的地址判断你是msql的驱动
+    url: jdbc:mysql://47.93.7.174:3306/yun6?useUnicode=true&characterEncoding=UTF-8 #springboot会根据你写的地址判断你是msql的驱动
     username: root
     password: 123456
 eureka:
@@ -12,5 +12,9 @@ eureka:
     service-url:
       defaultZone: http://127.0.0.1:10086/eureka
   instance:
-    prefer-ip-address: true
+    prefer-ip-address: true #这样保证拿到的是ip而不是host
     ip-address: 127.0.0.1 #这样保证拿到的是ip而不是host
+mybatis: #选择用什么日志打印sql语句，如果没有日志StdOutImpl打印在控制台
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
