@@ -12,6 +12,7 @@
         <module>cm-item</module>
         <module>cm-common</module>
         <module>cm-upload</module>
+        <module>cm-search</module>
     </modules>
     <!--    <modules>
             <module>leyou-registry</module>

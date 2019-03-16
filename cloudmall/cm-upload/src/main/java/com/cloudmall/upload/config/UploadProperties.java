@@ -8,14 +8,14 @@ import java.util.List;
 @ConfigurationProperties(prefix = "cm.upload")
 public class UploadProperties {
     private String baseUrl;
-    private List<String> alloTypes;
+    private List<String> allowTypes;
 
     public UploadProperties() {
     }
 
-    public UploadProperties(String baseUrl, List<String> alloTypes) {
+    public UploadProperties(String baseUrl, List<String> allowTypes) {
         this.baseUrl = baseUrl;
-        this.alloTypes = alloTypes;
+        this.allowTypes = allowTypes;
     }
 
     public String getBaseUrl() {
@@ -26,11 +26,11 @@ public class UploadProperties {
         this.baseUrl = baseUrl;
     }
 
-    public List<String> getAlloTypes() {
-        return alloTypes;
+    public List<String> getAllowTypes() {
+        return allowTypes;
     }
 
-    public void setAlloTypes(List<String> alloTypes) {
-        this.alloTypes = alloTypes;
+    public void setAllowTypes(List<String> allowTypes) {
+        this.allowTypes = allowTypes;
     }
 }

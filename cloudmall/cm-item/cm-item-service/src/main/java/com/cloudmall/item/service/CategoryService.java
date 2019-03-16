@@ -26,4 +26,17 @@ public class CategoryService {
         }
         return select;
     }
+
+    /**
+     * 根据id的集合查询并返回类别名字的集合
+     * @param ids
+     * @return
+     */
+    public List<Category> queryByIds(List<Long> ids){
+        List<Category> categories = categoryMapper.selectByIdList(ids);
+        if(categories==null || categories.isEmpty()){//或者CollectionUtils.isEmpty()
+            throw new CmException(ExceptionEnum.CATEGORY_NOT_FOUND);
+        }
+        return categories;
+    }
 }

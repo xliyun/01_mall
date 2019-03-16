@@ -69,6 +69,21 @@ public class BrandService {
                 throw new CmException(ExceptionEnum.BRAND_INTERMEDIDATE_SAVE_EROOR);
             }
         }
+    }
 
+    public Brand queryById(Long id){
+        Brand brand = brandMapper.selectByPrimaryKey(id);
+        if(brand==null){
+            throw new CmException(ExceptionEnum.BRAND_SAVE_EROOR);
+        }
+        return brand;
+    }
+
+    public List<Brand> queryBrandByCid(Long cid) {
+        List<Brand> brands = brandMapper.queryByCategoryId(cid);
+        if(CollectionUtils.isEmpty(brands)){
+            throw new CmException(ExceptionEnum.BRAND_SAVE_EROOR);
+        }
+        return brands;
     }
 }

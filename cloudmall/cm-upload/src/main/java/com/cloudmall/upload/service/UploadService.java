@@ -34,7 +34,7 @@ public class UploadService {
         try {
             //校验文件类型,请求头里的属性Content-Type:image/jpg
             String contentType = file.getContentType();
-            if(!prop.getAlloTypes().contains(contentType)){
+            if(!prop.getAllowTypes().contains(contentType)){
                 throw  new CmException(ExceptionEnum.INVALID_FILE_TYPE);
             }
             //校验文件内容，这个流可以读取一个图片,还可以读取图片宽高等信息校验

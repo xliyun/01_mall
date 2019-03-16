@@ -11,6 +11,7 @@
         <module name="cm-item-interface" />
         <module name="cm-item-service" />
         <module name="cm-registry" />
+        <module name="cm-search" />
         <module name="cm-upload" />
       </profile>
     </annotationProcessing>
@@ -22,6 +23,7 @@
       <module name="cm-item-interface" options="-parameters" />
       <module name="cm-item-service" options="-parameters" />
       <module name="cm-registry" options="-parameters" />
+      <module name="cm-search" options="-parameters" />
       <module name="cm-upload" options="-parameters" />
     </option>
   </component>

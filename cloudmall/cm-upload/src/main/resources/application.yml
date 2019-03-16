@@ -29,8 +29,8 @@ fdfs:
     - 47.93.7.174:22122
 cm:  #自己配置的
   upload:
-    baseUrl: "http://47.93.7.174/"
+    baseUrl: "http://47.93.7.174:8888/"
     allowTypes:
-      - image/jepg
+      - image/jpeg
       - image/png
       - image/bmp
