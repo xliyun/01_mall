@@ -2,13 +2,21 @@
 <project version="4">
   <component name="Encoding" native2AsciiForPropertiesFiles="true" defaultCharsetForPropertiesFiles="UTF-8" addBOMForNewFiles="with NO BOM">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cm-auth" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cm-auth/cm-auth-common" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cm-auth/cm-auth-service" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/cm-common" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/cm-gateway" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/cm-item" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/cm-item/cm-item-interface" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/cm-item/cm-item-service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cm-page" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/cm-registry" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/cm-search" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cm-sms" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/cm-upload" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cm-user" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cm-user/cm-user-interface" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cm-user/cm-user-service" charset="UTF-8" />
   </component>
 </project>

@@ -2,9 +2,10 @@ package com.cloudmall.item.web;
 
 import com.cloudmall.common.vo.PageResult;
 import com.cloudmall.item.pojo.Sku;
+import com.cloudmall.item.pojo.Spu;
 import com.cloudmall.item.pojo.Spu2;
 import com.cloudmall.item.pojo.SpuDetail;
-import com.cloudmall.item.pojo.vo.SpuVo;
+import com.cloudmall.item.vo.SpuVo;
 import com.cloudmall.item.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,7 +31,7 @@ public class GoodsController {
     @GetMapping("/spu/page")
     public ResponseEntity<PageResult<SpuVo>> querySpuByPage(
             @RequestParam(value="page",defaultValue = "1") Integer page,
-            @RequestParam(value="rows",defaultValue = "5") Integer rows,
+            @RequestParam(value="rows",defaultValue = "20") Integer rows,
             @RequestParam(value="SortBy",required = false) String sortBy,
             @RequestParam(value = "saleable",required = false) Boolean saleable,
             @RequestParam(value="key",required = false) String key
@@ -75,5 +76,26 @@ public class GoodsController {
     @GetMapping("sku/list")
     public ResponseEntity<List<Sku>> querySkuBySpuId(@RequestParam("id") Long spuId){
         return  ResponseEntity.ok(goodsService.querySkuBySpuId(spuId));
+    }
+
+
+    /**
+     *
+     * @param spuId
+     * @return
+     */
+    @GetMapping("spu/{id}")
+    public ResponseEntity<Spu> querySpuBySpuId(@PathVariable("id") Long spuId){
+        return  ResponseEntity.ok(goodsService.querySpuById(spuId));
+    }
+
+    /**
+     * 根据sku的id集合查询所有sku
+     * @param spuId
+     * @return
+     */
+    @GetMapping("sku/list/ids")
+    public ResponseEntity<List<Sku>> querySkuBySpuId(@RequestParam("ids") List<Long> ids){
+        return  ResponseEntity.ok(goodsService.querySkuByIds(ids));
     }
 }

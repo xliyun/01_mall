@@ -13,6 +13,10 @@
         <module>cm-common</module>
         <module>cm-upload</module>
         <module>cm-search</module>
+        <module>cm-page</module>
+        <module>cm-sms</module>
+        <module>cm-user</module>
+        <module>cm-auth</module>
     </modules>
     <!--    <modules>
             <module>leyou-registry</module>

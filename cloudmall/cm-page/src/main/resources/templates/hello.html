@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>hello</title>
+</head>
+<body>
+<h1>msg:<span th:text="${user.getName().toUpperCase().substring(2)}"></span></h1><br>
+<span th:text="${#dates.format(#dates.createNow(),'yyyy-mm-dd')}"></span>
+<span th:text="'<font color=\'red\'>hello</font>'"></span><br>
+<span th:utext="'<font color=\'red\'>hello</font>'"></span>
+
+<br>
+<h1><span th:text="100*200"></span></h1>
+<br>
+
+<ul>
+    <li th:each="user,stat : ${users}">
+        <span th:text="${user.getName()}"></span>
+        <span th:text="${user.getAge()}"></span>
+    </li>
+</ul>
+
+<script th:inline="javascript">
+    //内联模板 会把java list改成js的list
+    const users=/*[[${{users}}]]*/[];
+    for(let u in users){
+        //u是脚标
+        console.log(users[u]);
+    }
+</script>
+</body>
+</html>

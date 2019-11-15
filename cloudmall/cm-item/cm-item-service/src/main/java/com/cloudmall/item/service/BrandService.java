@@ -30,7 +30,6 @@ public class BrandService {
         PageHelper.startPage(page,rows);
         //过滤
         Example example = new Example(Brand.class);
-        System.out.println(key);
         if(StringUtils.isNotBlank(key)){
             //过滤条件
             example.createCriteria().orLike("name","%"+key+"%").orEqualTo("letter",key.toUpperCase());
@@ -81,6 +80,14 @@ public class BrandService {
 
     public List<Brand> queryBrandByCid(Long cid) {
         List<Brand> brands = brandMapper.queryByCategoryId(cid);
+        if(CollectionUtils.isEmpty(brands)){
+            throw new CmException(ExceptionEnum.BRAND_SAVE_EROOR);
+        }
+        return brands;
+    }
+
+    public List<Brand> queryByIds(List<Long> ids) {
+        List<Brand> brands = brandMapper.selectByIdList(ids);
         if(CollectionUtils.isEmpty(brands)){
             throw new CmException(ExceptionEnum.BRAND_SAVE_EROOR);
         }

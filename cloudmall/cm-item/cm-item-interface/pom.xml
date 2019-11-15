@@ -19,6 +19,21 @@
             <artifactId>mapper-core</artifactId>
             <version>1.0.4</version>
         </dependency>
+        <!--GoodsApi做接口需要-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+        </dependency>
+        <!--导入common的PageResult-->
+        <dependency>
+            <groupId>com.cloudmall.common</groupId>
+            <artifactId>cm-common</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

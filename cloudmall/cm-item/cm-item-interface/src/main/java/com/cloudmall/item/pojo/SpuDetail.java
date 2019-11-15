@@ -10,12 +10,22 @@ public class SpuDetail {
     private Long spuId;// 对应的SPU的主键id，所以不需要自增
     private String description;// 商品描述
     //private String specTemplate;// 商品特殊规格的名称及可选值模板
-    private String specifications;// 商品的全局规格属性
+    //private String specifications;// 商品的全局规格属性
     private String packingList;// 包装清单
     private String afterService;// 售后服务
     // 省略getter和setter
-    @Column(name="spec_template")
+    //特殊规格参数
     private String specialSpec;
+
+    private String genericSpec;//通用规格参数
+
+    public String getGenericSpec() {
+        return genericSpec;
+    }
+
+    public void setGenericSpec(String genericSpec) {
+        this.genericSpec = genericSpec;
+    }
 
     public Long getSpuId() {
         return spuId;
@@ -49,13 +59,13 @@ public class SpuDetail {
         this.specTemplate = specTemplate;
     }*/
 
-    public String getSpecifications() {
+/*    public String getSpecifications() {
         return specifications;
     }
 
     public void setSpecifications(String specifications) {
         this.specifications = specifications;
-    }
+    }*/
 
     public String getPackingList() {
         return packingList;

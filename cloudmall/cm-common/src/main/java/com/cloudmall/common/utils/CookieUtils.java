@@ -171,7 +171,8 @@ public final class CookieUtils {
 			if (cookieMaxage > 0)
 				cookie.setMaxAge(cookieMaxage);
 			if (null != request)// 设置域名的cookie
-				cookie.setDomain(getDomainName(request));
+				// TODO
+				cookie.setDomain(getDomainName(request)=="0.0.1"?"127.0.0.1":getDomainName(request));
 			cookie.setPath("/");
 			response.addCookie(cookie);
 		} catch (Exception e) {
@@ -181,6 +182,7 @@ public final class CookieUtils {
 
 	/**
 	 * 得到cookie的域名
+	 * 我们用api.cmcloud.com来请求，然后经过nginx反向代理 变成了127.0.0.1:8087
 	 */
 	private static final String getDomainName(HttpServletRequest request) {
 		String domainName = null;

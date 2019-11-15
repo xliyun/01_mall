@@ -1,0 +1,20 @@
+#需要配置redis的post   阿里云短信的accessKeyId accessKeySecret   工具类里的DefaultProfile.addEndpoint
+server:
+  port: 8086
+spring:
+  application:
+    name: sms-service
+  rabbitmq:
+    host: 47.93.7.174
+    username: cmcloud
+    password: cmcloud
+    virtual-host: /cmcloud
+  redis:
+  host: 47.93.7.174
+
+cmcloud:
+  sms:
+    accessKeyId: JWffwFJIwada # 你自己的accessKeyId
+    accessKeySecret: aySRliswq8fe7rF9gQyy1Izz4MQ # 你自己的AccessKeySecret
+    signName: 乐优商城 # 签名名称
+    verifyCodeTemplate: SMS_133976814 # 模板名称

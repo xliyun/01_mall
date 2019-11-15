@@ -1,0 +1,17 @@
+server:
+  port: 8084
+spring:
+  application:
+    name: page-service
+  thymeleaf:
+    cache: false #关闭thymeleaf默认缓存功能并且ctrl+shift+f9，原来是为了性能用的缓存，开发中关闭
+
+  rabbitmq:
+    host: 47.93.7.174
+    username: cmcloud
+    password: cmcloud
+    virtual-host: /cmcloud
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka

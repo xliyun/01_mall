@@ -36,6 +36,13 @@ public enum ExceptionEnum {
     GOODS_SAVE_ERROR(500,"新增商品失败"),
     GOODS_UPDATE_ERROR(500,"更新商品失败"),
     GOODS_ID_CANNOT_BE_NULL(400,"商品id不能为空"),
+
+    USER_DATA_TYPE_EXISTS(400,"用户数据类型无效"),
+    INVALID_VERIFY_CODE(500,"验证码错误"),
+    USER_NOT_EXISTS(500,"用户不存在"),
+    INVALID_PASSWORD(500,"密码错误"),
+    GENERATE_TOKEN_EROOR(500,"生成token失败"),
+    INVALID_TOKEN(500,"token已过期，或者token被篡改")
     ;
     private int code;
     private String msg;

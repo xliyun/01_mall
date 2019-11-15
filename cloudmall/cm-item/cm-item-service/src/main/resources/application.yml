@@ -7,6 +7,21 @@ spring:
     url: jdbc:mysql://47.93.7.174:3306/yun6?useUnicode=true&characterEncoding=UTF-8 #springboot会根据你写的地址判断你是msql的驱动
     username: root
     password: 123456
+  #rabbitmq配置
+  rabbitmq:
+    host: 47.93.7.174
+    username: cmcloud
+    password: cmcloud
+    virtual-host: /cmcloud
+    template: #相当于amqpTemplate
+      retry:
+        enabled: true #开启重试
+        initial-interval: 10000ms #初始化重试周期,第一次失败后10000ms重试
+        max-interval: 30000ms #最大重试周期，
+        multiplier: 2 #第一次重试后失败，会在2*10000ms后再重试，第三次就死2*2*10000ms，但不会超过30000ms
+      exchange: cm.item.exchange #如果发送消息的时候不写交换机，就会默认发送到这个交换机
+    publisher-confirms: true #生产者确认，消息发送失败要重试 retry就是重试信息
+
 eureka:
   client:
     service-url:
@@ -18,3 +33,5 @@ mybatis: #选择用什么日志打印sql语句，如果没有日志StdOutImpl打
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
+pagehelper:
+  reasonable: true  #为了使用输入页数为负或者超出最大页时候使页数为最小或最大值

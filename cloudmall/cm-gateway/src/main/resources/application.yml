@@ -16,11 +16,16 @@ zuul:
   prefix: /api # 添加路由前缀
   routes:                  #api/item/category/list api是前缀，
     item-service: /item/** #凡是以item开头的转发给item-service服务 真正到达的是catagory/list
+    search-service: /search/** # 搜索微服务
+    user-service: /user/** # 用户微服务
+    auth-service: /auth/** # 授权中心微服务
     upload-service:
       path: /upload/** #这种写法是为了传递到controller的时候，带着/upload
       serviceId: upload-service
       strip-prefix: false
   #retryable: true
+  add-host-header: true #转发请求的时候添加host头信息
+  sensitive-headers:    #覆盖zuul默认敏感头信息x`x`
 hystrix:
   command:
     default:
@@ -36,3 +41,18 @@ ribbon:
   #MaxAutoRetries: 1 # 同一实例的重试次数
   MaxAutoRetries: 0 #当前服务重试次数，重试可能导致一些问题，比如新增功能，重试会新增两次
   MaxAutoRetriesNextServer: 0 #切换服务重试次数
+
+cmcloud:
+  jwt:
+    #pubKeyPath: /home/cmcloud/rsa.pub # 公钥地址
+    #priKeyPath: /home/cmcloud/rsa.pri # 私钥地址
+    pubKeyPath: G:\rsa.pub # 公钥地址
+    cookieName: CM_TOKEN
+  filter:
+    allowPaths:
+      - /api/auth
+      - /api/search
+      - /api/user/register
+      - /api/user/check
+      - /api/user/code
+      - /api/item

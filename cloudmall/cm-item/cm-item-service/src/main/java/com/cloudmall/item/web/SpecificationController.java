@@ -72,4 +72,11 @@ public class SpecificationController {
         specificationService.saveGroupParam(specParam);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
+    //一个分类下多个规格组
+    @GetMapping("group")
+    public ResponseEntity<List<SpecGroup>> queryGroupListByCid(@RequestParam("cid") Long cid ){
+        return ResponseEntity.ok(specificationService.queryListByCid(cid));
+    }
+
 }

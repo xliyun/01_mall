@@ -30,7 +30,7 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
         </dependency>
-        <!--通用异常处理器需要用到springmvc的依赖-->
+        <!--通用异常处理器需要用到springmvc的依赖 不要引用启动器，启动器引入的东西太多了-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>

@@ -5,17 +5,18 @@ import com.cloudmall.common.exception.CmException;
 import com.cloudmall.common.vo.PageResult;
 import com.cloudmall.item.mapper.*;
 import com.cloudmall.item.pojo.*;
-import com.cloudmall.item.pojo.vo.SpuVo;
+import com.cloudmall.item.vo.SpuVo;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.amqp.AmqpException;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import tk.mybatis.mapper.entity.Example;
 
-import java.beans.Transient;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -42,6 +43,9 @@ public class GoodsService {
     @Autowired
     private StockMapper stockMapper;
 
+    @Autowired
+    private AmqpTemplate amqpTemplate;
+
     public PageResult<SpuVo> querySpuByPage(Integer page, Integer rows, Boolean saleable, String key) {
         //分页
         PageHelper.startPage(page,rows);
@@ -64,7 +68,7 @@ public class GoodsService {
         if(CollectionUtils.isEmpty(spus)){
             throw new CmException(ExceptionEnum.GOODS_NOT_FOUND);
         }
-        //解析分类和品牌的名称
+        //解析分类和品牌的名称 多加了分类名称和品牌名称
         List<SpuVo> spuVos=loadCategoryAndBrandName(spus);
         //解析分页结果
         PageInfo<Spu> info = new PageInfo<>();
@@ -84,6 +88,10 @@ public class GoodsService {
             spuVo.setSubTitle(spu.getSubTitle());
             spuVo.setSaleable(spu.getSaleable());
             spuVo.setTitle(spu.getTitle());
+            spuVo.setCid1(spu.getCid1());
+            spuVo.setCid2(spu.getCid2());
+            spuVo.setCid3(spu.getCid3());
+
             spuVo.setCname(StringUtils.join(collect,"/"));
             //处理品牌名称
             spuVo.setBname(brandService.queryById(spu.getBrandId()).getName());
@@ -113,6 +121,14 @@ public class GoodsService {
         //新增sku和库存
         saveSkuAndStock(spu2);
 
+        //防止发送消息失败影响商品保存代码
+        try {
+            //TODO
+            //增删改发送mq消息 把spu的id发送出去 搜索服务和静态页服务接收
+            amqpTemplate.convertAndSend("item.insert",spu2.getId());
+        } catch (AmqpException e) {
+            e.printStackTrace();
+        }
     }
 
     private void saveSkuAndStock(Spu2 spu2) {
@@ -166,22 +182,7 @@ public class GoodsService {
             s.setStock(stock.getStock());
         }*/
         //将sku的id都放到map里
-        List<Long> skuids = skuList.stream().map(Sku::getId).collect(Collectors.toList());
-        //一次查出所有的库存
-        List<Stock> stockList = stockMapper.selectByIdList(skuids);
-        if(CollectionUtils.isEmpty(stockList)){
-            throw new CmException(ExceptionEnum.GOODS_STOCK_NOT_FOUND);
-        }
-
-/*        //本来是要双层for循环遍历
-        for (Sku sku1 : skuList) {
-            for (Stock stock : stockList) {
-                if(sku1.getId()==stock.getSkuId()){}
-            }
-        }*/
-        //我们把stock变成一个map，其key是sku的id 值是库存值
-        Map<Long, Integer> stockMap = stockList.stream().collect(Collectors.toMap(Stock::getSkuId, Stock::getStock));
-        skuList.forEach(s->s.setStock(stockMap.get(s.getId())));
+        loadStockInSku(skuList);
         return skuList;
     }
 
@@ -219,5 +220,54 @@ public class GoodsService {
         }
         //新增sku和stock
         saveSkuAndStock(spu2);
+
+        //防止发送消息失败影响商品保存代码
+        try {
+            //发送mq消息 把spu的id发送出去 搜索服务和静态页服务接收
+            amqpTemplate.convertAndSend("item.update",spu2.getId());
+        } catch (AmqpException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Spu querySpuById(Long spuId) {
+        //查询spu
+        Spu spu = spuMapper.selectByPrimaryKey(spuId);
+        if(spu==null){
+            throw new CmException(ExceptionEnum.GOODS_NOT_FOUND);
+        }
+        //查询sku
+        List<Sku> skuList = querySkuBySpuId(spuId);
+        spu.setSkus(skuList);
+        //查询detail
+
+        spu.setSpuDetail(queryDetailById(spuId));
+        return spu;
+    }
+
+    public List<Sku> querySkuByIds(List<Long> ids) {
+        List<Sku> skuList = skuMapper.selectByIdList(ids);
+        if(CollectionUtils.isEmpty(skuList)){
+            throw  new CmException(ExceptionEnum.GOODS_SKU_NOT_FOUND);
+        }
+
+
+        loadStockInSku(skuList);
+
+        return skuList;
+    }
+
+    //查询库存
+    private void loadStockInSku(List<Sku> skuList) {
+        List<Long> skuids = skuList.stream().map(Sku::getId).collect(Collectors.toList());
+        //一次查出所有的库存
+        List<Stock> stockList = stockMapper.selectByIdList(skuids);
+        if (CollectionUtils.isEmpty(stockList)) {
+            throw new CmException(ExceptionEnum.GOODS_STOCK_NOT_FOUND);
+        }
+
+        //我们把stock变成一个map，其key是sku的id 值是库存值
+        Map<Long, Integer> stockMap = stockList.stream().collect(Collectors.toMap(Stock::getSkuId, Stock::getStock));
+        skuList.forEach(s -> s.setStock(stockMap.get(s.getId())));
     }
 }

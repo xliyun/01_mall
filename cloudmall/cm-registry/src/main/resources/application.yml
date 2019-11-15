@@ -21,3 +21,4 @@ eureka:
 user-service: #要对哪个服务进行负载均衡算法
   ribbon:
     NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule #负载均衡算法类名
+    

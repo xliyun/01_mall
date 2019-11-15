@@ -22,7 +22,7 @@ public class JsonUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(JsonUtils.class);
 
-    //@Nullable
+    //@Nullable toString
     public static String serialize(Object obj) {
         if (obj == null) {
             return null;

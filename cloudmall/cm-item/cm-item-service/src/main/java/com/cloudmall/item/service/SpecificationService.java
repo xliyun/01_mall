@@ -11,8 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class SpecificationService {
@@ -77,5 +76,26 @@ public class SpecificationService {
             throw new CmException(ExceptionEnum.SPEC_PARAM_NOT_FOUND);
         }
         return list;
+    }
+
+    public List<SpecGroup> queryListByCid(Long cid) {
+        //查询规格组
+        List<SpecGroup> specGroups = queryGroupById(cid);
+        //查询当前分类下的参数，然后再根据规格组分类
+        List<SpecParam> specParams = queryParamList(null, cid, null);
+        //填充param到group 用双重循环或者下面这种写法
+        //先把规格参数变成map,map的key是规格组id，map的值是组下的所有参数
+        Map<Long,List<SpecParam>> map=new HashMap<>();
+        for (SpecParam specParam : specParams) {
+            if(!map.containsKey(specParam.getGroupId())){
+                //组ID第一次出现
+                map.put(specParam.getGroupId(),new ArrayList<>());
+            }
+            map.get(specParam.getGroupId()).add(specParam);
+        }
+        for (SpecGroup specGroup : specGroups) {
+            specGroup.setParams(map.get(specGroup.getId()));
+        }
+        return specGroups;
     }
 }
